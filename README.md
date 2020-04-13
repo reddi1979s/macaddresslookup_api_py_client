@@ -19,7 +19,7 @@ On linux and MacOS
 Example:
 
 ```bash
-export MACADDRESSIO_API_KEY=at_VKIvhPfcPffhywNDMx61r0E1gAhKW
+export MACADDRESSIO_API_KEY=at_wTZQA1uS3XuiIEJBQeyzxX0Z7s9ru
 ```
 
 Note the above string is a randomly generated value and if you copy paste this exactly it will result in `"error": "Access restricted. Enter the correct API key."`
@@ -27,7 +27,7 @@ Note the above string is a randomly generated value and if you copy paste this e
 And then simply run
 
 ```bash
-./mac_vendor.py -m "E8404079C860"
+./macaddresslookup.py -m "E8404079C860"
 ```
 
 This should give output of the company name. For the above example it would show:
@@ -41,7 +41,7 @@ You can control the output format and values to fetch. By default it only fetche
 **NOTE** The script does partial matches of the query value as well. So, if the JSON object key is companyName a shorthand unique string name for query should also return a match. If it's not unique the program would return the first match found. And if none found it would return None.
 
 ```text
-usage: mac_vendor.py [-h] [-o OUTPUT] [-q QUERY] [-r] [-v] macaddr
+usage: macaddresslookup.py [-h] [-o OUTPUT] [-q QUERY] [-r] [-v] macaddr
 
 Query macaddress.io and fetch the vendor information associated with the mac address
 
@@ -60,7 +60,7 @@ optional arguments:
 
 ### Examples
 
-`./mac_vendor.py E8:40:40:79:C8:60 -r`
+`./macaddresslookup.py E8:40:40:79:C8:60 -r`
 
 Output:
 
@@ -68,7 +68,7 @@ Output:
 {"vendorDetails":{"oui":"E84040","isPrivate":false,"companyName":"Cisco Systems, Inc","companyAddress":"80 West Tasman Drive San Jose CA 94568 US","countryCode":"US"},"blockDetails":{"blockFound":true,"borderLeft":"E84040000000","borderRight":"E84040FFFFFF","blockSize":16777216,"assignmentBlockSize":"MA-L","dateCreated":"2011-03-17","dateUpdated":"2015-09-27"},"macAddressDetails":{"searchTerm":"E8:40:40:79:C8:60","isValid":true,"virtualMachine":"Not detected","applications":[],"transmissionType":"unicast","administrationType":"UAA","wiresharkNotes":"No details","comment":""}}
 ```
 
-`./mac_vendor.py E8:40:40:79:C8:60 --query "name,valid"`
+`./macaddresslookup.py E8:40:40:79:C8:60 --query "name,valid"`
 
 Output:
 
@@ -77,7 +77,7 @@ name="Cisco Systems, Inc"
 valid="True"
 ```
 
-`./mac_vendor.py E8:40:40:79:C8:60 --query "name,valid" --output csv`
+`./macaddresslookup.py E8:40:40:79:C8:60 --query "name,valid" --output csv`
 
 Output:
 
@@ -94,14 +94,14 @@ Code formatting has be done using [black](https://github.com/psf/black). I reall
 
 For your convenience a Dockerfile has also been provided along with the code.
 
- docker run --env MACADDRESSIO_API_KEY=key <image_name> mac_vendor.py <MAC_ADDRESS> <OPTIONAL_PARAMS>
+ docker run --env MACADDRESSIO_API_KEY=key <image_name> macaddresslookup.py <MAC_ADDRESS> <OPTIONAL_PARAMS>
 
 Either build it yourself or you can use the one below:
 
  Example:
 
 ```bash
-docker run --env MACADDRESSIO_API_KEY=$MY_API_KEY balwa/macaddress-python-client:latest mac_vendor.py E8-40-40-79-C8-60
+docker run --env MACADDRESSIO_API_KEY=$MY_API_KEY sekher79/macaddresslookupclient:latest macaddresslookup.py E8-40-40-79-C8-60
 ```
 
 ## Security
@@ -110,6 +110,3 @@ While the docker image build process does have an optional argument to bake the 
 
 Also, relaying on MAC address vendor information to detect anomalous devices in your network by itself isn't a complete security guarantee. An attacker can easily alter the MAC address of their machine to match the  trusted MAC address value. Do consider enabling other security features like DHCP snooping to reduce the  surface for Man in the Middle attacks.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
